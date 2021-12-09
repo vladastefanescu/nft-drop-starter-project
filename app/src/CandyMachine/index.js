@@ -353,7 +353,6 @@ const CandyMachine = ({ walletAddress }) => {
     const currentDate = new Date();
 
     const dropDate = new Date(machineStats?.goLiveData * 1000);
-    dropDate.setDate(dropDate.getDate() + 15);
 
     // If currentDate is before dropDate, render our Countdown component
     if (currentDate < dropDate) {
@@ -373,13 +372,21 @@ const CandyMachine = ({ walletAddress }) => {
   return (
     <div className="machine-container">
       {renderDropTimer()}
-      <p>{`Items Minted: ${machineStats?.itemsRedeemed} / ${machineStats?.itemsAvailable}`}</p>
-      <button className="cta-button mint-button" onClick={mintToken} disabled={isMinting}>
-        Mint NFT
-      </button>
-      {/* If we have mints available in our array, let's render some items */}
-      {isLoadingMints && <p>LOADING MINTS...</p>}
+      <p>{`Items Minted: ${machineStats.itemsRedeemed} / ${machineStats.itemsAvailable}`}</p>
+      {/* Check to see if these properties are equal! */}
+      {machineStats.itemsRedeemed === machineStats.itemsAvailable ? (
+        <p className="sub-text">Sold Out 🙊</p>
+      ) : (
+        <button
+          className="cta-button mint-button"
+          onClick={mintToken}
+          disabled={isMinting}
+        >
+          Mint NFT
+        </button>
+      )}
       {mints.length > 0 && renderMintedItems()}
+      {isLoadingMints && <p>LOADING MINTS...</p>}
     </div>
   );
 };
