@@ -5,6 +5,7 @@ import { MintLayout, Token, TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { programs} from '@metaplex/js';
 import './CandyMachine.css';
 import { candyMachineProgram, SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID, TOKEN_METADATA_PROGRAM_ID } from './helpers';
+import CountdownTimer from '../CountdownTimer';
 
 const {
   metadata: { Metadata, MetadataProgram },
@@ -347,13 +348,31 @@ const CandyMachine = ({ walletAddress }) => {
     </div>
   );
 
+  const renderDropTimer = () => {
+    // Get the current date and dropDate in a JavaScript Date object
+    const currentDate = new Date();
+
+    const dropDate = new Date(machineStats?.goLiveData * 1000);
+    dropDate.setDate(dropDate.getDate() + 15);
+
+    // If currentDate is before dropDate, render our Countdown component
+    if (currentDate < dropDate) {
+      console.log('Before drop date!');
+      // Don't forget to pass over your dropDate!
+      return <CountdownTimer dropDate={dropDate} />;
+    }
+
+    // Else let's just return the current drop date
+    return <p>{`Drop Date: ${machineStats?.goLiveDateTimeString}`}</p>;
+  };
+
   useEffect(() => {
     getCandyMachineState();
   }, []);
 
   return (
     <div className="machine-container">
-      <p>{`Drop Date: ${machineStats?.goLiveDateTimeString}`}</p>
+      {renderDropTimer()}
       <p>{`Items Minted: ${machineStats?.itemsRedeemed} / ${machineStats?.itemsAvailable}`}</p>
       <button className="cta-button mint-button" onClick={mintToken} disabled={isMinting}>
         Mint NFT
