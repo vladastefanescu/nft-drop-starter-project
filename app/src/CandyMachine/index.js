@@ -187,7 +187,7 @@ const CandyMachine = ({ walletAddress }) => {
         txn,
         async (notification, context) => {
           if (notification.type === 'status') {
-            console.log('Receievd status event');
+            console.log('Received status event');
 
             const { result } = notification;
             if (!result.err) {
@@ -310,9 +310,9 @@ const CandyMachine = ({ walletAddress }) => {
 
   return (
     <div className="machine-container">
-      <p>{`Drop Date: ${machineStats.goLiveDateTimeString}`}</p>
-      <p>{`Items Minted: ${machineStats.itemsRedeemed} / ${machineStats.itemsAvailable}`}</p>
-      <button className="cta-button mint-button" onClick={null}>
+      <p>{`Drop Date: ${machineStats?.goLiveDateTimeString}`}</p>
+      <p>{`Items Minted: ${machineStats?.itemsRedeemed} / ${machineStats?.itemsAvailable}`}</p>
+      <button className="cta-button mint-button" onClick={mintToken}>
         Mint NFT
       </button>
     </div>
