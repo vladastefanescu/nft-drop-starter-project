@@ -286,7 +286,7 @@ const CandyMachine = ({ walletAddress }) => {
 
     // Parse out all our metadata and log it out
     const itemsAvailable = candyMachine.data.itemsAvailable.toNumber();
-    const itemsRedeemed = candyMachine.itemsRedeemed.toNumber();
+    const itemsRedeemed = candyMachine?.itemsRedeemed.toNumber();
     const itemsRemaining = itemsAvailable - itemsRedeemed;
     const goLiveData = candyMachine.data.goLiveDate.toNumber();
 
@@ -372,9 +372,9 @@ const CandyMachine = ({ walletAddress }) => {
   return (
     <div className="machine-container">
       {renderDropTimer()}
-      <p>{`Items Minted: ${machineStats.itemsRedeemed} / ${machineStats.itemsAvailable}`}</p>
+      <p>{`Items Minted: ${machineStats?.itemsRedeemed} / ${machineStats?.itemsAvailable}`}</p>
       {/* Check to see if these properties are equal! */}
-      {machineStats.itemsRedeemed === machineStats.itemsAvailable ? (
+      {machineStats?.itemsRedeemed === machineStats?.itemsAvailable ? (
         <p className="sub-text">Sold Out 🙊</p>
       ) : (
         <button
